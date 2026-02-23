@@ -320,9 +320,8 @@ def generate_website(
             list(FUTURISTIC_TEMPLATES.values()).index(selected_template)
         ]
     
-    # Determine tier
+    # Determine tier (initially from template or override)
     website_tier = tier or selected_template["tier"]
-    tier_config = WEBSITE_TIERS[website_tier]
     
     # Generate AI copy
     headline = random.choice(
@@ -343,6 +342,10 @@ def generate_website(
     # Generate performance metrics
     perf_metrics = generate_performance_metrics(website_tier)
     performance_score, assigned_tier = calculate_performance_score(**perf_metrics)
+    
+    # Align tier to calculated performance classification
+    website_tier = assigned_tier
+    tier_config = WEBSITE_TIERS[website_tier]
     
     # Create website configuration
     website_config = {
