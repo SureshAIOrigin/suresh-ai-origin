@@ -168,6 +168,14 @@ AI_COPY_LIBRARY = {
             "{product} - Exceptional Results Guaranteed",
             "Premium Solutions, Elite Performance",
             "Your Success Story Starts Today"
+        ],
+        "PREMIUM": [
+            "{product}: Premium Performance Made Simple",
+            "Upgrade to {product} for Modern Excellence"
+        ],
+        "GROWTH": [
+            "Grow Faster with {product}",
+            "Launch Confidently with {product}"
         ]
     },
     "subheaders": {
@@ -180,11 +188,21 @@ AI_COPY_LIBRARY = {
             "Smart solutions for ambitious teams.",
             "Get results 10x faster than competitors.",
             "Enterprise-grade power, user-friendly design."
+        ],
+        "PREMIUM": [
+            "Balanced speed, design, and conversion for modern brands.",
+            "Professional-grade experiences without the complexity."
+        ],
+        "GROWTH": [
+            "Essential performance with reliable conversion fundamentals.",
+            "Built to launch quickly and learn from every visitor."
         ]
     },
     "cta_buttons": {
         "BREAKTHROUGH": ["Start Your Breakthrough", "Join the Elite", "Access Now - Limited Spots"],
-        "ELITE": ["Get Started Free", "See Live Demo", "Try Premium"]
+        "ELITE": ["Get Started Free", "See Live Demo", "Try Premium"],
+        "PREMIUM": ["Explore Premium", "Upgrade Today", "View Plans"],
+        "GROWTH": ["Start Now", "See Features", "Begin Your Launch"]
     }
 }
 
@@ -323,7 +341,8 @@ def generate_website(
     # Determine initial tier (template or override)
     initial_tier = tier or selected_template["tier"]
     
-    # Generate performance metrics
+    # Generate performance metrics using the template's baseline
+    # The final tier is recalculated from these metrics to ensure consistency
     perf_metrics = generate_performance_metrics(initial_tier)
     performance_score, assigned_tier = calculate_performance_score(**perf_metrics)
     
