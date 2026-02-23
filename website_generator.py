@@ -320,10 +320,18 @@ def generate_website(
             list(FUTURISTIC_TEMPLATES.values()).index(selected_template)
         ]
     
-    # Determine tier (initially from template or override)
-    website_tier = tier or selected_template["tier"]
+    # Determine initial tier (template or override)
+    initial_tier = tier or selected_template["tier"]
     
-    # Generate AI copy
+    # Generate performance metrics
+    perf_metrics = generate_performance_metrics(initial_tier)
+    performance_score, assigned_tier = calculate_performance_score(**perf_metrics)
+    
+    # Align tier to calculated performance classification
+    website_tier = assigned_tier
+    tier_config = WEBSITE_TIERS[website_tier]
+    
+    # Generate AI copy aligned to final tier classification
     headline = random.choice(
         AI_COPY_LIBRARY["hero_headlines"].get(website_tier, 
         AI_COPY_LIBRARY["hero_headlines"]["ELITE"])
@@ -338,14 +346,6 @@ def generate_website(
         AI_COPY_LIBRARY["cta_buttons"].get(website_tier, 
         AI_COPY_LIBRARY["cta_buttons"]["ELITE"])
     )
-    
-    # Generate performance metrics
-    perf_metrics = generate_performance_metrics(website_tier)
-    performance_score, assigned_tier = calculate_performance_score(**perf_metrics)
-    
-    # Align tier to calculated performance classification
-    website_tier = assigned_tier
-    tier_config = WEBSITE_TIERS[website_tier]
     
     # Create website configuration
     website_config = {
